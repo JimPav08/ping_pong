@@ -44,5 +44,39 @@ finish = False
 clock = time.Clock()
 FPS = 60 #ποσες φορες ανα δευτερολεπτο ανανεωνεται η οθονη 
 
+#Δημιουργια ρακετας και μπαλας
+racket1 = Player("racket.png", 30,200,4,50,150)
+racket2 = Player("racket.png",520,200,4,50,150)
+ball = GameSprite('tenis_ball.png',200,200,4,50,50)
+
+#Μυνημα ηττας
+font.init()
+font = font.Font(None, 35)
+lose1 = font.render("Player 1 LOSE!", True, (180,0,0))
+lose2 = font.render("Player 2 LOSE!", True, (180,0,0))
+
+#ταχυτητα μπαλας
+speed_x = 3
+speed_y = 3
+
+#Κυριος βροχος παιχνιδιου
+while game:
+    for e in event.get():
+        if e.type == QUIT:
+            game = False #Τελος παιχνιδιου αν κλεισει το παραθυρο
+
+    if not finish:
+        window.fill(back)     #καθαριζει την οθονη
+        racket1.update_l()    # Ενημερωνει αριστερα ρακετα
+        racket2.update_r()    # Ενημερωνει δεξια ρακετα
+        ball.rect.x += speed_x
+        ball.rect.y += speed_y
+
+        # Αναπηδηση οταν η μπαλα χτυπησει ρακετες
+        if sprite.collide_rect(racket1, ball) or sprite.collide_rect(racket2,ball):
+            speed_x *= -1
+
+        #Αναπηδηση απο πανω/κατω
+
 
 
